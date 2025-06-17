@@ -61,6 +61,7 @@ resource "aws_instance" "my_ec2" {
     instance_type = var.instance_type
     key_name = aws_key_pair.deployer.key_name
     security_groups = [aws_security_group.my_sg.name]
+    user_data = file("install_nginx.sh")
 
     root_block_device {
         volume_size = var.root_volume_size
