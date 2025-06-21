@@ -62,7 +62,11 @@ resource "aws_instance" "my_ec2" {
         instance2 = "t2.nano"
     }) # meta-argument for_each
     #count = 2 # meta-argument count
-    
+
+    depends_on = [aws_security_group.my_sg, 
+                  aws_key_pair.deployer, 
+                  aws_default_vpc.default]
+
     ami = var.ami_id
     instance_type = each.value
     key_name = aws_key_pair.deployer.key_name
