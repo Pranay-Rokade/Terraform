@@ -65,8 +65,8 @@ resource "aws_instance" "my_ec2" {
 
     depends_on = [aws_security_group.my_sg, 
                   aws_key_pair.deployer, 
-                  aws_default_vpc.default]
-
+                  aws_default_vpc.default] # meta-argument dependency management
+    
     ami = var.ami_id
     instance_type = each.value
     key_name = aws_key_pair.deployer.key_name
@@ -74,11 +74,12 @@ resource "aws_instance" "my_ec2" {
     user_data = file("install_nginx.sh")
     
     root_block_device {
-        volume_size = var.root_volume_size
+        volume_size = var.environment == "production" ? 30 : var.default_root_volume_size
         volume_type = "gp3"
     }
 
     tags = {
         Name = each.key
+        Environment = var.environment
     }
 }

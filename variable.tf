@@ -1,4 +1,4 @@
-variable "root_volume_size" {
+variable "default_root_volume_size" {
   description = "Size of the root volume in GB"
   default = 8
   type = number
@@ -13,5 +13,11 @@ variable "ami_id" {
 variable "instance_type" {
   description = "Instance type for the EC2 instance"
   default = "t2.micro"
+  type = string
+}
+
+variable "environment" {
+  description = "Environment for the EC2 instance"
+  default = "dev"
   type = string
 }
